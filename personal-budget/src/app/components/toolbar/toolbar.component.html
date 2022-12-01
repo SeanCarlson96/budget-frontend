@@ -1,11 +1,11 @@
-<mat-toolbar color="primary">
-    <span>My App</span>
-    <button mat-icon-button color="accent" (click)="ui.page()">
+<mat-toolbar class="header" color="primary">
+    <button mat-icon-button class="button" color="accent" (click)="ui.page('dashboard')">
         <mat-icon>account_balance</mat-icon>
         Dashboard
     </button>
-    <button mat-icon-button color="accent" (click)="ui.page()">
+    <button mat-icon-button class="button" color="accent" (click)="ui.page('transactions')">
         <mat-icon>credit_card</mat-icon>
         Transactions
     </button>
+    <span>Personal Budget Manager</span>
 </mat-toolbar>

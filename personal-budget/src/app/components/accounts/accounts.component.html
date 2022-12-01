@@ -1,0 +1,22 @@
+<h1>My Accounts</h1>
+
+<form>
+    <mat-form-field appearance="fill">
+        <mat-label>Account Name</mat-label>
+        <input matInput [(ngModel)]="ui.newAccount.name" name="name">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Account Type</mat-label>
+        <input matInput [(ngModel)]="ui.newAccount.type" name="type">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Account Balance</mat-label>
+        <input matInput type="number" [(ngModel)]="ui.newAccount.balance" name="balance">
+    </mat-form-field>
+    <button mat-icon-button class="button" color="accent" (click)="ui.addAccount()">
+        <mat-icon>add_box</mat-icon>
+        Add Account
+    </button>
+</form>
+
+<app-display-account *ngFor="let account of ui.accounts" [account]="account"></app-display-account>

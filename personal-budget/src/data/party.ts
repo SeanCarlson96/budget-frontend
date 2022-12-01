@@ -1,10 +1,10 @@
-import { Budget } from "./budget"
-
 export class Party {
+    id: number
     name: string
-    budget: Budget[]
+    budget: number[]
 
-    constructor(name: string, budget: Budget[]){
+    constructor(id: number, name: string, budget: number[]){
+        this.id = id
         this.name = name
         this.budget = budget
     }

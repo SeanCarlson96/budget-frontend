@@ -1,11 +1,7 @@
-import { Account } from "./account"
-import { Budget } from "./budget"
-import { Party } from "./party"
-
 export interface Transaction {
     id: number
-    party: Party
+    partyId: number
     amount: number
-    account: Account
-    budget?: Budget
+    accountId: number
+    budgetId?: number
 }

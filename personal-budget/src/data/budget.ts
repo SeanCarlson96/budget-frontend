@@ -1,15 +1,17 @@
 import { Account } from "./account"
 
 export class Budget {
+    id: number
     name: string
     total: number
     balance: number
-    account: Account
+    accountId: number
 
-    constructor(name: string, total: number, balance: number, account: Account){
+    constructor(id: number, name: string, total: number, balance: number, account: number){
+        this.id = id
         this.name = name
         this.total = total
         this.balance = balance
-        this.account = account
+        this.accountId = account
     }
 }
