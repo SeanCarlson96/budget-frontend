@@ -1,0 +1,68 @@
+{
+    "doctors": [
+      {
+        "availability": [
+          {
+            "id": 0.6200452931774512,
+            "startTime": "2022-11-28T22:21:00.000Z",
+            "endTime": "2022-11-28T23:21:00.000Z"
+          }
+        ],
+        "appointments": [],
+        "id": 0.6234407460219153,
+        "name": "Doctor T",
+        "username": "t",
+        "password": "t"
+      },
+      {
+        "availability": [],
+        "appointments": [],
+        "id": 0.08176151552342747,
+        "name": "g",
+        "username": "g",
+        "password": "g"
+      },
+      {
+        "availability": [],
+        "appointments": [],
+        "id": 0.3164471132881792,
+        "name": "g",
+        "username": "g",
+        "password": "g"
+      },
+      {
+        "availability": [],
+        "appointments": [],
+        "id": 0.3017695377762586,
+        "name": "f",
+        "username": "f",
+        "password": "f"
+      },
+      {
+        "availability": [],
+        "appointments": [],
+        "id": 0.47410636279675367,
+        "name": "f",
+        "username": "f",
+        "password": "f"
+      }
+    ],
+    "patients": [
+      {
+        "availability": [],
+        "appointments": [],
+        "id": 0.8239981204493643,
+        "name": "Patient R",
+        "username": "r",
+        "password": "r"
+      },
+      {
+        "availability": [],
+        "appointments": [],
+        "id": 0.8256029372221645,
+        "name": "g",
+        "username": "g",
+        "password": "g"
+      }
+    ]
+  }
