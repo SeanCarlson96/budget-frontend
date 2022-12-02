@@ -1,1 +1,31 @@
-<p>transactions works!</p>
+<div class="container">
+<h1>My Transactions</h1>
+
+<form>
+    <mat-form-field appearance="fill">
+        <mat-label>Other Party</mat-label>
+        <input matInput [(ngModel)]="ui.newTransactionPartyName" name="partyName">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Account Name</mat-label>
+        <mat-select #registerRole [(ngModel)]="ui.newTransaction.accountId" name="accountName">
+            <mat-option *ngFor="let account of ui.accounts" [value]="account.id">{{account.name}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Transaction Amount</mat-label>
+        <input matInput type="number" [(ngModel)]="ui.newTransaction.amount" name="amount">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Associated Budget (optional)</mat-label>
+        <input matInput type="number" [(ngModel)]="ui.newTransactionBudgetName" name="budget">
+    </mat-form-field>
+    <button mat-icon-button class="button" color="accent" (click)="ui.addTransaction()">
+        <mat-icon>add_box</mat-icon>
+        Add Transaction
+    </button>
+</form>
+
+<app-display-transaction *ngFor="let transaction of ui.transactions"
+[transaction]="transaction"></app-display-transaction>
+</div>

@@ -17,6 +17,9 @@ import { MatCardModule } from '@angular/material/card';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { DisplayBudgetComponent } from './components/display-budget/display-budget.component';
+import { DisplayTransactionComponent } from './components/display-transaction/display-transaction.component';
+import {MatSelectModule} from '@angular/material/select';
 
 @NgModule({
   declarations: [
@@ -26,7 +29,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     TransactionsComponent,
     AccountsComponent,
     BudgetsComponent,
-    DisplayAccountComponent
+    DisplayAccountComponent,
+    DisplayBudgetComponent,
+    DisplayTransactionComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +43,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatCardModule,
     HttpClientModule,
     FormsModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatSelectModule
   ],
   providers: [],
   bootstrap: [AppComponent]

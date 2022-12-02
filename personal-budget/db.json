@@ -34,6 +34,12 @@
       "total": 100,
       "balance": 20,
       "account": 2
+    },
+    {
+      "id": 4,
+      "name": "new",
+      "total": "500",
+      "balance": 0
     }
   ],
   "parties": [

@@ -1,1 +1,18 @@
-<p>budgets works!</p>
+<h1>My Budgets</h1>
+
+<form>
+    <mat-form-field appearance="fill">
+        <mat-label>Budget Name</mat-label>
+        <input matInput [(ngModel)]="ui.newBudget.name" name="name">
+    </mat-form-field>
+    <mat-form-field appearance="fill">
+        <mat-label>Budget Total</mat-label>
+        <input matInput [(ngModel)]="ui.newBudget.total" name="total">
+    </mat-form-field>
+    <button mat-icon-button class="button" color="accent" (click)="ui.addBudget()">
+        <mat-icon>add_box</mat-icon>
+        Add Budget
+    </button>
+</form>
+
+<app-display-budget *ngFor="let budget of ui.budgets" [budget]="budget"></app-display-budget>
