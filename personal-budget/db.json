@@ -4,13 +4,13 @@
       "id": 1,
       "name": "Checking Account",
       "type": "Checking",
-      "balance": 13565
+      "balance": 13165
     },
     {
       "id": 2,
       "name": "Savings Account",
       "type": "Savings",
-      "balance": 150000
+      "balance": 150800
     }
   ],
   "budgets": [
@@ -57,6 +57,20 @@
       "budgetId": [
         3
       ]
+    },
+    {
+      "id": 4,
+      "name": "",
+      "budgetId": [
+        0
+      ]
+    },
+    {
+      "id": 5,
+      "name": "dfsssssssssssss",
+      "budgetId": [
+        0
+      ]
     }
   ],
   "transactions": [
@@ -73,20 +87,6 @@
       "accountId": 1,
       "amount": 122,
       "id": 5
-    },
-    {
-      "partyId": 1,
-      "accountId": 1,
-      "amount": -50,
-      "budgetId": 1,
-      "id": 6
-    },
-    {
-      "partyId": 3,
-      "accountId": 1,
-      "amount": -35,
-      "budgetId": 3,
-      "id": 7
     }
   ]
 }

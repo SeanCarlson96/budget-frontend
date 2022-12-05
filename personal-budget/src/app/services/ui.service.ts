@@ -207,7 +207,53 @@ export class UiService {
       }
     }
   }
+  checkForSuggestedBudgets(transaction: Transaction){
+    //loop through parties
+    for(let i = 0; i < this.parties.length; i++){
+      //if the transaction partyId is in parties
+      if(transaction.partyId === this.parties[i].id){
+        //get that full party information
+        this.enteredParty = this.parties[i]
+        //create an array of the budgets listed for that party
+        this.enteredParty.budgetId ? this.budgetArr = this.enteredParty.budgetId : this.budgetArr = []
+        //loop through the budgetArr
+        for(let i = 0; i < this.budgetArr.length; i++){
+          //loop through budgets
+          for(let j = 0; j < this.budgets.length; j++){
+            //if the number in budgetArr is the id inside budgets
+            if(this.budgets[j].id === this.budgetArr[i])
+              //add that whole budget into suggestedBudgets
+              this.suggestedBudgets.push(this.budgets[j])
+          }
+        }
+      }
+    }
+
+  }
   budgetAssociator(){
-    
+    //loop through this.transactions
+    for(let i = 0; i < this.transactions.length; i++){
+      
+      if(this.transactions[i].budgetId){
+      } else {
+        //if there is no budgetId listed, check/make the suggestedbudgets for that
+        //transactions party
+        this.checkForSuggestedBudgets(this.transactions[i])
+
+        //if there are suggestedbudgets, add them into the transaction
+        if(this.suggestedBudgets.length > 0){
+          this.http
+            .patch('http://localhost:3000/transactions/' + this.transactions[i].id, {budgetId: this.suggestedBudgets[0].id})
+            .pipe(take(1))
+            .subscribe(() => this.getTransactions(), () => this.openSnackBar('Something went wrong', 'Close'))
+        } else {
+        //else add the miscellaneous budget to the transaction
+        this.http
+            .patch('http://localhost:3000/transactions/' + this.transactions[i].id, {budgetId: -1})
+            .pipe(take(1))
+            .subscribe(() => this.getTransactions(), () => this.openSnackBar('Something went wrong', 'Close'))
+        }
+      }
+    }
   }
 }
