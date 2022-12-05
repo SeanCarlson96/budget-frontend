@@ -20,6 +20,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DisplayBudgetComponent } from './components/display-budget/display-budget.component';
 import { DisplayTransactionComponent } from './components/display-transaction/display-transaction.component';
 import {MatSelectModule} from '@angular/material/select';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {MatSelectModule} from '@angular/material/select';
     HttpClientModule,
     FormsModule,
     MatSnackBarModule,
-    MatSelectModule
+    MatSelectModule,
+    MatRadioModule
   ],
   providers: [],
   bootstrap: [AppComponent]

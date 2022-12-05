@@ -30,15 +30,8 @@
     },
     {
       "id": 3,
-      "name": "Utilities",
-      "total": 100,
-      "balance": 20,
-      "account": 2
-    },
-    {
-      "id": 4,
-      "name": "new",
-      "total": "500",
+      "name": "Fun",
+      "total": "1000",
       "balance": 0
     }
   ],
@@ -46,14 +39,14 @@
     {
       "id": 1,
       "name": "Walmart",
-      "budget": [
+      "budgetId": [
         1
       ]
     },
     {
       "id": 2,
       "name": "Landlord",
-      "budget": [
+      "budgetId": [
         2,
         3
       ]
@@ -61,16 +54,18 @@
   ],
   "transactions": [
     {
-      "id": 1,
-      "partyId": 1,
-      "amount": 300,
-      "accountId": 1
+      "partyId": 2,
+      "id": 4,
+      "amount": 5000,
+      "accountId": 1,
+      "budgetId": 2
     },
     {
-      "id": 2,
-      "partyId": 2,
-      "amount": 100,
-      "accountId": 1
+      "partyId": 1,
+      "budgetId": 1,
+      "accountId": 1,
+      "amount": 122,
+      "id": 5
     }
   ]
 }
