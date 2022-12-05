@@ -4,7 +4,7 @@
       "id": 1,
       "name": "Checking Account",
       "type": "Checking",
-      "balance": 6700
+      "balance": 13565
     },
     {
       "id": 2,
@@ -18,21 +18,21 @@
       "id": 1,
       "name": "Groceries",
       "total": 500,
-      "balance": 300,
+      "balance": 200,
       "accountId": 1
     },
     {
       "id": 2,
       "name": "Rent",
       "total": 1500,
-      "balance": 600,
+      "balance": 500,
       "account": 2
     },
     {
       "id": 3,
       "name": "Fun",
       "total": "1000",
-      "balance": 0
+      "balance": -35
     }
   ],
   "parties": [
@@ -48,6 +48,13 @@
       "name": "Landlord",
       "budgetId": [
         2,
+        3
+      ]
+    },
+    {
+      "id": 3,
+      "name": "Football Game",
+      "budgetId": [
         3
       ]
     }
@@ -66,6 +73,20 @@
       "accountId": 1,
       "amount": 122,
       "id": 5
+    },
+    {
+      "partyId": 1,
+      "accountId": 1,
+      "amount": -50,
+      "budgetId": 1,
+      "id": 6
+    },
+    {
+      "partyId": 3,
+      "accountId": 1,
+      "amount": -35,
+      "budgetId": 3,
+      "id": 7
     }
   ]
 }

@@ -9,18 +9,23 @@
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Account Name</mat-label>
-        <mat-select #registerRole [(ngModel)]="ui.newTransaction.accountId" name="accountName">
+        <mat-select #registerRole [(ngModel)]="ui.newTransaction.accountId"
+        name="accountName" required>
             <mat-option *ngFor="let account of ui.accounts" [value]="account.id">{{account.name}}</mat-option>
         </mat-select>
     </mat-form-field>
-    <mat-form-field appearance="fill">
-        <mat-label>Transaction Amount</mat-label>
+    <mat-radio-group aria-label="Select an option" [(ngModel)]="ui.income" name="type" >
+        <mat-radio-button [value]="true">Income</mat-radio-button>
+        <mat-radio-button [value]="false" checked>Expense</mat-radio-button>
+    </mat-radio-group>
+    <mat-form-field *ngIf="ui.income" appearance="fill">
+        <mat-label>Income Amount</mat-label>
         <input matInput type="number" [(ngModel)]="ui.newTransaction.amount" name="amount">
     </mat-form-field>
-    <mat-radio-group aria-label="Select an option">
-        <mat-radio-button value="1">Option 1</mat-radio-button>
-        <mat-radio-button value="2">Option 2</mat-radio-button>
-    </mat-radio-group>
+    <mat-form-field *ngIf="ui.income === false" appearance="fill">
+        <mat-label>Expense Amount</mat-label>
+        <input matInput type="number" [(ngModel)]="ui.newTransaction.amount" name="amount">
+    </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Associated Budget (optional)</mat-label>
         <mat-select #registerRole [(ngModel)]="ui.newTransaction.budgetId" name="budget">
@@ -36,6 +41,11 @@
         Add Transaction
     </button>
 </form>
+<br>
+<button mat-icon-button class="button" color="accent" (click)="ui.budgetAssociator()">
+    <mat-icon>build</mat-icon>
+    Apply suggested budgets to all unassociated transactions
+</button>
 
 <app-display-transaction *ngFor="let transaction of ui.transactions"
 [transaction]="transaction"></app-display-transaction>

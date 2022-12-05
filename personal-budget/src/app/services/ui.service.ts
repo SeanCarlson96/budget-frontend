@@ -31,6 +31,11 @@ export class UiService {
   private newPartyId: number = 0
   private enteredParty: Party = {} as Party
   private budgetArr: number[] = []
+  income: boolean = false
+  private updatedAccountBalance: number = 0
+  private currentAccountBalance: number = 0
+  private updatedBudgetBalance: number = 0
+  private currentBudgetBalance: number = 0
 
   constructor(http: HttpClient, private _snackBar: MatSnackBar) {
     this.target = localStorage.getItem("page")? localStorage.getItem("page") : 'dashboard';
@@ -145,11 +150,38 @@ export class UiService {
   }
   addTransaction() {
     this.checkForPartyId()
+    if(this.income === false) { this.newTransaction.amount = this.newTransaction.amount * -1 }
     this.http
       .post('http://localhost:3000/transactions', this.newTransaction)
       .pipe(take(1))
       .subscribe(() => this.getTransactions(), () => this.openSnackBar('Something went wrong', 'Close'))
+    //find account based on this.newTransaction.accountId
+    for(let i = 0; i < this.accounts.length; i++){
+      if(this.accounts[i].id === this.newTransaction.accountId){
+        this.currentAccountBalance = this.accounts[i].balance
+      }
+    }
+    //apply this.newTransaction.amount to the budget.balance
+    this.updatedAccountBalance = this.currentAccountBalance + this.newTransaction.amount
+    this.http
+      .patch('http://localhost:3000/accounts/' + this.newTransaction.accountId, {balance: this.updatedAccountBalance})
+      .pipe(take(1))
+      .subscribe(() => this.getAccounts(), () => this.openSnackBar('Something went wrong', 'Close'))
+    //find Budget based on this.newTransaction.budgetId
+    for(let i = 0; i < this.budgets.length; i++){
+      if(this.budgets[i].id === this.newTransaction.budgetId){
+        this.currentBudgetBalance = this.budgets[i].balance
+      }
+    }
+    //apply this.newTransaction.amount to the account.balance
+    this.updatedBudgetBalance = this.currentBudgetBalance + this.newTransaction.amount
+    this.http
+      .patch('http://localhost:3000/budgets/' + this.newTransaction.budgetId, {balance: this.updatedBudgetBalance})
+      .pipe(take(1))
+      .subscribe(() => this.getBudgets(), () => this.openSnackBar('Something went wrong', 'Close'))
+    //reset feilds
     this.newTransaction.id = this.newTransaction.id + 1
+    this.newTransactionPartyName = ''
     this.newTransaction.partyId = 0
     this.newTransaction.amount = 0
     this.newTransaction.accountId = 0
@@ -164,7 +196,7 @@ export class UiService {
         //get budget id or ids from that party
         //add those budgets to this.suggestedBudgets
         this.enteredParty.budgetId ? this.budgetArr = this.enteredParty.budgetId : this.budgetArr = []
-        
+
         for(let i = 0; i < this.budgetArr.length; i++){
           //for every budgetId in this party, add that budget to suggestedBudgets
           for(let j = 0; j < this.budgets.length; j++){
@@ -174,5 +206,8 @@ export class UiService {
         }
       }
     }
+  }
+  budgetAssociator(){
+    
   }
 }
