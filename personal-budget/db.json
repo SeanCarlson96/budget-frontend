@@ -4,7 +4,7 @@
       "id": 1,
       "name": "Checking Account",
       "type": "Checking",
-      "balance": 13165
+      "balance": 12598
     },
     {
       "id": 2,
@@ -25,7 +25,7 @@
       "id": 2,
       "name": "Rent",
       "total": 1500,
-      "balance": 500,
+      "balance": 0,
       "account": 2
     },
     {
@@ -67,9 +67,9 @@
     },
     {
       "id": 5,
-      "name": "dfsssssssssssss",
+      "name": "test",
       "budgetId": [
-        0
+        2
       ]
     }
   ],
@@ -87,6 +87,27 @@
       "accountId": 1,
       "amount": 122,
       "id": 5
+    },
+    {
+      "partyId": 2,
+      "accountId": 1,
+      "amount": -67,
+      "id": 6,
+      "budgetId": 2
+    },
+    {
+      "partyId": 4,
+      "accountId": 0,
+      "amount": 0,
+      "id": 7,
+      "budgetId": 2
+    },
+    {
+      "partyId": 5,
+      "accountId": 1,
+      "amount": -500,
+      "budgetId": 2,
+      "id": 8
     }
   ]
 }

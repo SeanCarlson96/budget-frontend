@@ -21,6 +21,8 @@ import { DisplayBudgetComponent } from './components/display-budget/display-budg
 import { DisplayTransactionComponent } from './components/display-transaction/display-transaction.component';
 import {MatSelectModule} from '@angular/material/select';
 import {MatRadioModule} from '@angular/material/radio';
+import {MatSortModule} from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table' 
 
 @NgModule({
   declarations: [
@@ -46,7 +48,9 @@ import {MatRadioModule} from '@angular/material/radio';
     FormsModule,
     MatSnackBarModule,
     MatSelectModule,
-    MatRadioModule
+    MatRadioModule,
+    MatSortModule,
+    MatTableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

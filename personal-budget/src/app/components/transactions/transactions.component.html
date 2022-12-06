@@ -41,12 +41,13 @@
         Add Transaction
     </button>
 </form>
+
 <br>
 <button mat-icon-button class="button" color="accent" (click)="ui.budgetAssociator()">
     <mat-icon>build</mat-icon>
     Apply suggested budgets to all unassociated transactions
 </button>
+<br>
 
-<app-display-transaction *ngFor="let transaction of ui.transactions"
-[transaction]="transaction"></app-display-transaction>
+<app-display-transaction></app-display-transaction>
 </div>

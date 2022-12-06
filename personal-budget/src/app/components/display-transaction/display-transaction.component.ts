@@ -1,4 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { UiService } from 'src/app/services/ui.service';
 import { Transaction } from 'src/data/transaction';
 
 @Component({
@@ -6,6 +7,16 @@ import { Transaction } from 'src/data/transaction';
   templateUrl: './display-transaction.component.html',
   styleUrls: ['./display-transaction.component.css']
 })
-export class DisplayTransactionComponent {
-  @Input() transaction: Transaction = {} as Transaction
+export class DisplayTransactionComponent implements OnInit {
+  ui: UiService
+  displayedColumns: string[] = ['id', 'amount', 'party', 'account', 'budget'];
+  dataSource: Transaction[] = []
+  subscription: any
+
+  constructor(ui:UiService){
+    this.ui = ui
+  }
+  ngOnInit() {
+    this.subscription = this.ui.getEmittedTransactions().subscribe(item => this.dataSource=item);
+  }
 }

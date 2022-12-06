@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Subject, take } from 'rxjs';
+import { EventEmitter, Injectable, Output } from '@angular/core';
+import { Observable, Subject, take } from 'rxjs';
 import { Account } from 'src/data/account';
-import {MatSnackBar} from '@angular/material/snack-bar';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Budget } from 'src/data/budget';
 import { Transaction } from 'src/data/transaction';
 import { Party } from 'src/data/party';
@@ -36,6 +36,7 @@ export class UiService {
   private currentAccountBalance: number = 0
   private updatedBudgetBalance: number = 0
   private currentBudgetBalance: number = 0
+  @Output() updatedTransactions: EventEmitter<Transaction[]> = new EventEmitter();
 
   constructor(http: HttpClient, private _snackBar: MatSnackBar) {
     this.target = localStorage.getItem("page")? localStorage.getItem("page") : 'dashboard';
@@ -99,8 +100,12 @@ export class UiService {
       .subscribe(transactions => {
         this.transactions = transactions
         this.transactionsSubject.next(this.transactions)
+        this.updatedTransactions.emit(this.transactions);
       },
       () => console.log('something went wrong in getTransactions()'))
+  }
+  getEmittedTransactions() {
+    return this.updatedTransactions;
   }
   private getParties(){
     this.http
@@ -256,4 +261,5 @@ export class UiService {
       }
     }
   }
+  
 }
