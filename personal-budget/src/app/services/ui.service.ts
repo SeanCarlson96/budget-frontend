@@ -6,6 +6,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { Budget } from 'src/data/budget';
 import { Transaction } from 'src/data/transaction';
 import { Party } from 'src/data/party';
+import { strTransaction } from 'src/data/strTransaction';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,8 @@ export class UiService {
   private currentAccountBalance: number = 0
   private updatedBudgetBalance: number = 0
   private currentBudgetBalance: number = 0
-  @Output() updatedTransactions: EventEmitter<Transaction[]> = new EventEmitter();
+  @Output() updatedTransactions: EventEmitter<strTransaction[]> = new EventEmitter();
+  translatedTransactions: strTransaction[] = []
 
   constructor(http: HttpClient, private _snackBar: MatSnackBar) {
     this.target = localStorage.getItem("page")? localStorage.getItem("page") : 'dashboard';
@@ -100,12 +102,33 @@ export class UiService {
       .subscribe(transactions => {
         this.transactions = transactions
         this.transactionsSubject.next(this.transactions)
-        this.updatedTransactions.emit(this.transactions);
+        this.updatedTransactions.emit(this.translateTransactions(this.transactions))
       },
       () => console.log('something went wrong in getTransactions()'))
   }
   getEmittedTransactions() {
     return this.updatedTransactions;
+  }
+  translateTransactions(transactions: Transaction[]): strTransaction[]{
+    for(let i = 0; i < transactions.length; i++){
+      let tran: strTransaction = {} as strTransaction
+      this.http
+        .get<Party>('http://localhost:3000/parties/' + transactions[i].partyId)
+        .pipe(take(1))
+        .subscribe(party => tran.partyName = party.name)
+      this.http
+        .get<Account>('http://localhost:3000/accounts/' + transactions[i].accountId)
+        .pipe(take(1))
+        .subscribe(account => tran.accountName = account.name)
+      this.http
+        .get<Budget>('http://localhost:3000/budgets/' + transactions[i].budgetId)
+        .pipe(take(1))
+        .subscribe(budget => tran.budgetName = budget.name)
+      tran.id = transactions[i].id
+      tran.amount = transactions[i].amount
+      this.translatedTransactions.push(tran)
+    }
+    return this.translatedTransactions
   }
   private getParties(){
     this.http
@@ -154,6 +177,11 @@ export class UiService {
     return this.newTransaction.partyId = 0
   }
   addTransaction() {
+    if(
+      this.newTransactionPartyName === '' ||
+      this.newTransaction.accountId === 0 ||
+      this.newTransaction.amount === 0
+    ){this.openSnackBar('Please enter all required feilds', 'Close')} else {
     this.checkForPartyId()
     if(this.income === false) { this.newTransaction.amount = this.newTransaction.amount * -1 }
     this.http
@@ -190,6 +218,7 @@ export class UiService {
     this.newTransaction.partyId = 0
     this.newTransaction.amount = 0
     this.newTransaction.accountId = 0
+  }
   }
   suggestBudgets() {
     this.suggestedBudgets = []

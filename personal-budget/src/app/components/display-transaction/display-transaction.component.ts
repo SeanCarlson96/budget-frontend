@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { UiService } from 'src/app/services/ui.service';
+import { strTransaction } from 'src/data/strTransaction';
 import { Transaction } from 'src/data/transaction';
 
 @Component({
@@ -10,7 +11,7 @@ import { Transaction } from 'src/data/transaction';
 export class DisplayTransactionComponent implements OnInit {
   ui: UiService
   displayedColumns: string[] = ['id', 'amount', 'party', 'account', 'budget'];
-  dataSource: Transaction[] = []
+  dataSource: strTransaction[] = []
   subscription: any
 
   constructor(ui:UiService){

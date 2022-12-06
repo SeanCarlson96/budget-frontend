@@ -96,13 +96,6 @@
       "budgetId": 2
     },
     {
-      "partyId": 4,
-      "accountId": 0,
-      "amount": 0,
-      "id": 7,
-      "budgetId": 2
-    },
-    {
       "partyId": 5,
       "accountId": 1,
       "amount": -500,

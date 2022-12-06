@@ -5,7 +5,7 @@
     <mat-form-field appearance="fill">
         <mat-label>Other Party</mat-label>
         <input matInput [(ngModel)]="ui.newTransactionPartyName"
-        name="partyName" (input)="ui.suggestBudgets()">
+        name="partyName" (input)="ui.suggestBudgets()" required>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Account Name</mat-label>
@@ -20,11 +20,13 @@
     </mat-radio-group>
     <mat-form-field *ngIf="ui.income" appearance="fill">
         <mat-label>Income Amount</mat-label>
-        <input matInput type="number" [(ngModel)]="ui.newTransaction.amount" name="amount">
+        <input matInput type="number" [(ngModel)]="ui.newTransaction.amount"
+        name="amount" required>
     </mat-form-field>
     <mat-form-field *ngIf="ui.income === false" appearance="fill">
         <mat-label>Expense Amount</mat-label>
-        <input matInput type="number" [(ngModel)]="ui.newTransaction.amount" name="amount">
+        <input matInput type="number" [(ngModel)]="ui.newTransaction.amount"
+        name="amount" required>
     </mat-form-field>
     <mat-form-field appearance="fill">
         <mat-label>Associated Budget (optional)</mat-label>
