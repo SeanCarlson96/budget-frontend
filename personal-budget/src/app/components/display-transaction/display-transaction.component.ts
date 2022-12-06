@@ -16,6 +16,8 @@ export class DisplayTransactionComponent implements OnInit {
   dataSource = new MatTableDataSource(this.dataInfo)
   subscription: any
   @ViewChild(MatSort) matSort! : MatSort
+  filterBy: string = ''
+  filterEvent: string = ''
 
   constructor(ui:UiService){
     this.ui = ui
@@ -25,5 +27,12 @@ export class DisplayTransactionComponent implements OnInit {
       this.dataSource.data = item
       this.dataSource.sort = this.matSort
     })
+  }
+  searchFilterTable($event: any){
+    this.dataSource.filter = $event.target.value
+    console.log($event)
+  }
+  filterTable(){
+    this.dataSource.filter = this.filterEvent
   }
 }

@@ -1,32 +1,93 @@
+<div>
+  <mat-form-field appearance="fill">
+    <input
+      matInput
+      placeholder="Search Filter"
+      autocomplete="off"
+      (keyup)="searchFilterTable($event)"
+    />
+  </mat-form-field>
+</div>
+<div>
+  <mat-form-field appearance="fill">
+    <mat-label>Filter By</mat-label>
+    <mat-select #registerRole [(ngModel)]="filterBy" name="filterBy">
+      <mat-option value="account">Account</mat-option>
+      <mat-option value="party">Party</mat-option>
+      <mat-option value="budget">Budget</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="filterBy === 'account'" appearance="fill">
+    <mat-label>Account Name</mat-label>
+    <mat-select
+      #registerRole
+      [(ngModel)]="filterEvent"
+      name="accountName"
+      (ngModelChange)="filterTable()"
+      multiple
+    >
+      <mat-option *ngFor="let account of ui.accounts" [value]="[account.name]">{{
+        account.name
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field *ngIf="filterBy === 'party'" appearance="fill">
+    <mat-label>Party Name</mat-label>
+    <mat-select
+      #registerRole
+      [(ngModel)]="filterEvent"
+      name="party"
+      (ngModelChange)="filterTable()"
+    >
+      <mat-option *ngFor="let party of ui.parties" [value]="party.name">{{
+        party.name
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field *ngIf="filterBy === 'budget'" appearance="fill">
+    <mat-label>Budget Name</mat-label>
+    <mat-select
+      #registerRole
+      [(ngModel)]="filterEvent"
+      name="budget"
+      (ngModelChange)="filterTable()"
+    >
+      <mat-option *ngFor="let budget of ui.budgets" [value]="budget.name">{{
+        budget.name
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+
 
 <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef>Id</th>
+    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
 
-    <ng-container matColumnDef="id">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef> Id </th>
-      <td mat-cell *matCellDef="let element"> {{element.id}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="amount">
-        <th mat-header-cell mat-sort-header *matHeaderCellDef> Amount </th>
-        <td mat-cell *matCellDef="let element"> {{element.amount}} </td>
-    </ng-container>
+  <ng-container matColumnDef="amount">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef>Amount</th>
+    <td mat-cell *matCellDef="let element">{{ element.amount }}</td>
+  </ng-container>
 
-    <ng-container matColumnDef="partyName">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef> Party </th>
-      <td mat-cell *matCellDef="let element"> {{element.partyName}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="accountName">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef> Account </th>
-      <td mat-cell *matCellDef="let element"> {{element.accountName}} </td>
-    </ng-container>
-  
-    <ng-container matColumnDef="budgetName">
-      <th mat-header-cell mat-sort-header *matHeaderCellDef> Budget </th>
-      <td mat-cell *matCellDef="let element"> {{element.budgetName}} </td>
-    </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  <ng-container matColumnDef="partyName">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef>Party</th>
+    <td mat-cell *matCellDef="let element">{{ element.partyName }}</td>
+  </ng-container>
 
+  <ng-container matColumnDef="accountName">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef>Account</th>
+    <td mat-cell *matCellDef="let element">{{ element.accountName }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="budgetName">
+    <th mat-header-cell mat-sort-header *matHeaderCellDef>Budget</th>
+    <td mat-cell *matCellDef="let element">{{ element.budgetName }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
 </table>

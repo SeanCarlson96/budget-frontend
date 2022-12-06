@@ -17,7 +17,7 @@ export class UiService {
   budgets: Budget[] = []
   suggestedBudgets: Budget[] = this.budgets
   transactions: Transaction[] = []
-  private parties: Party[] = []
+  parties: Party[] = []
   private http: HttpClient
   private accountsSubject: Subject<Account[]> = new Subject()
   private budgetsSubject: Subject<Budget[]> = new Subject()
