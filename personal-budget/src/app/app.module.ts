@@ -19,10 +19,10 @@ import { FormsModule } from '@angular/forms';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DisplayBudgetComponent } from './components/display-budget/display-budget.component';
 import { DisplayTransactionComponent } from './components/display-transaction/display-transaction.component';
-import {MatSelectModule} from '@angular/material/select';
-import {MatRadioModule} from '@angular/material/radio';
-import {MatSortModule} from '@angular/material/sort';
-import { MatTableModule } from '@angular/material/table' 
+import { MatSelectModule } from '@angular/material/select';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSortModule } from '@angular/material/sort';
+import { MatTableModule } from '@angular/material/table';
 
 @NgModule({
   declarations: [
