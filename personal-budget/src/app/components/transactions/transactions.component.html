@@ -1,56 +1,60 @@
 <div class="container">
-<h1>My Transactions</h1>
 
-<app-display-transaction></app-display-transaction>
-<br>
-<form>
-    <mat-form-field appearance="fill">
-        <mat-label>Other Party</mat-label>
-        <input matInput [(ngModel)]="ui.newTransactionPartyName"
-        name="partyName" (input)="ui.suggestBudgets()" required>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-        <mat-label>Account Name</mat-label>
-        <mat-select #registerRole [(ngModel)]="ui.newTransaction.accountId"
-        name="accountName" required>
-            <mat-option *ngFor="let account of ui.accounts" [value]="account.id">{{account.name}}</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <mat-radio-group aria-label="Select an option" [(ngModel)]="ui.income" name="type" >
-        <mat-radio-button [value]="true">Income</mat-radio-button>
-        <mat-radio-button [value]="false" checked>Expense</mat-radio-button>
-    </mat-radio-group>
-    <mat-form-field *ngIf="ui.income" appearance="fill">
-        <mat-label>Income Amount</mat-label>
-        <input matInput type="number" [(ngModel)]="ui.newTransaction.amount"
-        name="amount" required>
-    </mat-form-field>
-    <mat-form-field *ngIf="ui.income === false" appearance="fill">
-        <mat-label>Expense Amount</mat-label>
-        <input matInput type="number" [(ngModel)]="ui.newTransaction.amount"
-        name="amount" required>
-    </mat-form-field>
-    <mat-form-field appearance="fill">
-        <mat-label>Associated Budget (optional)</mat-label>
-        <mat-select #registerRole [(ngModel)]="ui.newTransaction.budgetId" name="budget">
-            <mat-option *ngFor="let budget of ui.budgets" [value]="budget.id">{{budget.name}}</mat-option>
-        </mat-select>
-    </mat-form-field>
-    <div *ngIf="ui.suggestedBudgets.length > 0">
-        <p>Associated Budget Suggestions: </p>
-        <p *ngFor="let budget of ui.suggestedBudgets">{{budget.name}}</p>
+    <div>
+        <h1>Add Transaction</h1>
+        <form>
+            <mat-form-field appearance="fill">
+                <mat-label>Other Party</mat-label>
+                <input matInput [(ngModel)]="ui.newTransactionPartyName"
+                name="partyName" (input)="ui.suggestBudgets()" required>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Account Name</mat-label>
+                <mat-select #registerRole [(ngModel)]="ui.newTransaction.accountId"
+                name="accountName" required>
+                    <mat-option *ngFor="let account of ui.accounts" [value]="account.id">{{account.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-radio-group aria-label="Select an option" [(ngModel)]="ui.income" name="type" >
+                <mat-radio-button [value]="true">Income</mat-radio-button>
+                <mat-radio-button [value]="false" checked>Expense</mat-radio-button>
+            </mat-radio-group>
+            <mat-form-field *ngIf="ui.income" appearance="fill">
+                <mat-label>Income Amount</mat-label>
+                <input matInput type="number" [(ngModel)]="ui.newTransaction.amount"
+                name="amount" required>
+            </mat-form-field>
+            <mat-form-field *ngIf="ui.income === false" appearance="fill">
+                <mat-label>Expense Amount</mat-label>
+                <input matInput type="number" [(ngModel)]="ui.newTransaction.amount"
+                name="amount" required>
+            </mat-form-field>
+            <mat-form-field appearance="fill">
+                <mat-label>Associated Budget (optional)</mat-label>
+                <mat-select #registerRole [(ngModel)]="ui.newTransaction.budgetId" name="budget">
+                    <mat-option *ngFor="let budget of ui.budgets" [value]="budget.id">{{budget.name}}</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <div *ngIf="ui.suggestedBudgets.length > 0">
+                <p>Associated Budget Suggestions: </p>
+                <p *ngFor="let budget of ui.suggestedBudgets">{{budget.name}}</p>
+            </div>
+            <button mat-icon-button class="button" color="accent" (click)="ui.addTransaction()">
+                <mat-icon>add_box</mat-icon>
+                Add Transaction
+            </button>
+        </form>
+        <br>
+        <button mat-icon-button class="button" color="accent" (click)="ui.budgetAssociator()">
+            <mat-icon>build</mat-icon>
+            Apply suggested budgets to all unassociated transactions
+        </button>
+        <br>
     </div>
-    <button mat-icon-button class="button" color="accent" (click)="ui.addTransaction()">
-        <mat-icon>add_box</mat-icon>
-        Add Transaction
-    </button>
-</form>
 
-<br>
-<button mat-icon-button class="button" color="accent" (click)="ui.budgetAssociator()">
-    <mat-icon>build</mat-icon>
-    Apply suggested budgets to all unassociated transactions
-</button>
-<br>
+    <div>
+        <h1>My Transactions</h1>
+        <app-display-transaction></app-display-transaction>
+    </div>
 
 </div>
