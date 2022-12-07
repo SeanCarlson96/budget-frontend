@@ -112,8 +112,6 @@ export class UiService {
     })
   }
   whenTransUpdates(): Observable<strTransaction[]>{
-    console.log('trans updated')
-    console.log(this.transSubject.asObservable())
     return this.transSubject.asObservable()
   }
   // getEmittedTransactions() {

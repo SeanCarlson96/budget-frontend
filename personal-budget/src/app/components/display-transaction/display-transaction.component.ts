@@ -29,11 +29,10 @@ export class DisplayTransactionComponent implements OnInit, OnDestroy {
 
   constructor(ui:UiService){
     this.ui = ui
-    console.log('constructing display trans')
+    ui.getTransactions()
     this.transSubscription = ui.whenTransUpdates().subscribe(trans => {
       this.dataSource.data = trans
       this.dataSource.sort = this.matSort
-      console.log(this.dataSource.data)
     })
   }
   ngOnInit() {
