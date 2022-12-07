@@ -37,8 +37,9 @@ export class UiService {
   private currentAccountBalance: number = 0
   private updatedBudgetBalance: number = 0
   private currentBudgetBalance: number = 0
-  @Output() updatedTransactions: EventEmitter<strTransaction[]> = new EventEmitter();
+  //@Output() updatedTransactions: EventEmitter<strTransaction[]> = new EventEmitter()
   translatedTransactions: strTransaction[] = []
+  private transSubject: Subject<strTransaction[]> = new Subject()
 
   constructor(http: HttpClient, private _snackBar: MatSnackBar) {
     this.target = localStorage.getItem("page")? localStorage.getItem("page") : 'dashboard';
@@ -100,17 +101,26 @@ export class UiService {
     this.http
       .get<Transaction[]>('http://localhost:3000/transactions')
       .pipe(take(1))
-      .subscribe(transactions => {
-        this.transactions = transactions
-        this.transactionsSubject.next(this.transactions)
-        this.updatedTransactions.emit(this.translateTransactions(this.transactions))
-      },
-      () => console.log('something went wrong in getTransactions()'))
+      .subscribe({
+        next: transactions => {
+                this.transactions = transactions
+                this.transactionsSubject.next(this.transactions)
+                this.transSubject.next(this.translateTransactions(this.transactions))
+                //this.updatedTransactions.emit(this.translateTransactions(this.transactions))
+              },
+        error: () => console.log('something went wrong in getTransactions()')
+    })
   }
-  getEmittedTransactions() {
-    return this.updatedTransactions;
+  whenTransUpdates(): Observable<strTransaction[]>{
+    console.log('trans updated')
+    console.log(this.transSubject.asObservable())
+    return this.transSubject.asObservable()
   }
+  // getEmittedTransactions() {
+  //   return this.updatedTransactions;
+  // }
   translateTransactions(transactions: Transaction[]): strTransaction[]{
+    this.translatedTransactions = []
     for(let i = 0; i < transactions.length; i++){
       let tran: strTransaction = {} as strTransaction
       this.http
@@ -295,5 +305,4 @@ export class UiService {
       }
     }
   }
-  
 }

@@ -4,19 +4,19 @@
       "id": 1,
       "name": "checking",
       "type": "checking",
-      "balance": 752
+      "balance": -84
     },
     {
       "id": 2,
       "name": "saving",
       "type": "savings",
-      "balance": 8922
+      "balance": 6540
     },
     {
       "id": 3,
       "name": "new",
       "type": "ira",
-      "balance": 7000
+      "balance": 5900
     }
   ],
   "budgets": [
@@ -24,37 +24,42 @@
       "id": 1,
       "name": "food",
       "total": "1000",
-      "balance": 700
+      "balance": -327
+    },
+    {
+      "id": 2,
+      "name": "utilities",
+      "total": "880",
+      "balance": -1855
     }
   ],
   "parties": [
     {
       "id": 1,
-      "name": "Whole Foods",
-      "budgetId": []
+      "name": "Walmart",
+      "budgetId": [
+        1
+      ]
     },
     {
       "id": 2,
-      "name": "Walmart",
-      "budgetId": []
-    },
-    {
-      "id": 3,
-      "name": "test",
-      "budgetId": []
-    },
-    {
-      "id": 4,
       "name": "Landlord",
       "budgetId": [
         2
       ]
     },
     {
-      "id": 5,
-      "name": "work",
+      "id": 3,
+      "name": "test",
       "budgetId": [
-        1
+        2
+      ]
+    },
+    {
+      "id": 4,
+      "name": "different party",
+      "budgetId": [
+        0
       ]
     }
   ],
@@ -62,37 +67,51 @@
     {
       "partyId": 1,
       "accountId": 1,
-      "amount": -55,
-      "budgetId": -1,
+      "amount": -700,
+      "budgetId": 1,
       "id": 1
     },
     {
       "partyId": 2,
       "accountId": 2,
-      "amount": -8,
-      "budgetId": -1,
+      "amount": -600,
+      "budgetId": 2,
       "id": 2
     },
     {
       "partyId": 3,
-      "accountId": 1,
-      "amount": -70,
-      "budgetId": -1,
+      "accountId": 3,
+      "amount": -78,
+      "budgetId": 2,
       "id": 3
     },
     {
       "partyId": 2,
-      "accountId": 1,
-      "amount": -700,
-      "budgetId": 1,
+      "accountId": 3,
+      "amount": -952,
+      "budgetId": 2,
       "id": 4
     },
     {
-      "partyId": 5,
-      "accountId": 1,
-      "amount": 400,
+      "partyId": 1,
+      "accountId": 3,
+      "amount": -51,
       "budgetId": 1,
       "id": 5
+    },
+    {
+      "partyId": 1,
+      "accountId": 1,
+      "amount": -4,
+      "budgetId": 1,
+      "id": 6
+    },
+    {
+      "partyId": 4,
+      "accountId": 2,
+      "amount": -556,
+      "id": 7,
+      "budgetId": -1
     }
   ]
 }
