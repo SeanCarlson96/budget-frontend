@@ -85,7 +85,6 @@ export class DisplayTransactionComponent implements OnInit, OnDestroy {
     return myFilterPredicate
   }
   downloadTable() {
-    console.log(this.dataSource)
     var csvData = this.exportCSV(this.dataSource.filteredData)
     var a = document.createElement("a")
     a.setAttribute('style', 'display:none;')

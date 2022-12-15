@@ -55,7 +55,7 @@ export class UiService {
   }
   getAccounts(){
     this.http
-      .get<Account[]>('http://localhost:3000/accounts')
+      .get<Account[]>('http://localhost:8080/accounts')
       .pipe(take(1))
       .subscribe(accounts => {
         this.accounts = accounts
@@ -65,7 +65,7 @@ export class UiService {
   }
   addAccount(){
     this.http
-      .post('http://localhost:3000/accounts', this.newAccount)
+      .post('http://localhost:8080/accounts', this.newAccount)
       .pipe(take(1))
       .subscribe(() => this.getAccounts(), () => this.openSnackBar('Something went wrong', 'Close'))
     this.newAccount.id = this.newAccount.id + 1
@@ -78,18 +78,18 @@ export class UiService {
   }
   getBudgets(){
     this.http
-      .get<Budget[]>('http://localhost:3000/budgets')
+      .get<Budget[]>('http://localhost:8080/budgets')
       .pipe(take(1))
       .subscribe(budgets => {
         this.budgets = budgets
-        this.budgetsSubject.next(this.budgets)
+        //this.budgetsSubject.next(this.budgets)
       },
-      () => console.log('something went wrong in getAccounts()'))
+      () => console.log('something went wrong in getBudgets()'))
   }
   addBudget(){
     this.newBudget.balance = Number(this.newBudget.total)
     this.http
-      .post('http://localhost:3000/budgets', this.newBudget)
+      .post('http://localhost:8080/budgets', this.newBudget)
       .pipe(take(1))
       .subscribe(() => this.getBudgets(), () => this.openSnackBar('Something went wrong', 'Close'))
     this.newBudget.id = this.newBudget.id + 1
@@ -99,7 +99,7 @@ export class UiService {
   }
   getTransactions(){
     this.http
-      .get<Transaction[]>('http://localhost:3000/transactions')
+      .get<Transaction[]>('http://localhost:8080/transactions')
       .pipe(take(1))
       .subscribe({
         next: transactions => {
@@ -122,19 +122,21 @@ export class UiService {
     for(let i = 0; i < transactions.length; i++){
       let tran: strTransaction = {} as strTransaction
       this.http
-        .get<Party>('http://localhost:3000/parties/' + transactions[i].partyId)
+        .get<Party>(`http://localhost:8080/parties?id=${transactions[i].partyId}`)
         .pipe(take(1))
-        .subscribe(party => tran.partyName = party.name)
+        .subscribe(party  => tran.partyName = party.name)
+
       this.http
-        .get<Account>('http://localhost:3000/accounts/' + transactions[i].accountId)
+        .get<Account>('http://localhost:8080/accounts?id=' + transactions[i].accountId)
         .pipe(take(1))
         .subscribe(account => tran.accountName = account.name)
-      if(transactions[i].budgetId && transactions[i].budgetId! > 0){
+
+      //if(transactions[i].budgetId && transactions[i].budgetId! > 0){
       this.http
-        .get<Budget>('http://localhost:3000/budgets/' + transactions[i].budgetId)
+        .get<Budget>('http://localhost:8080/budgets?id=' + transactions[i].budgetId)
         .pipe(take(1))
         .subscribe(budget => tran.budgetName = budget.name)
-      }
+      //}
       tran.id = transactions[i].id
       tran.amount = transactions[i].amount
       this.translatedTransactions.push(tran)
@@ -143,7 +145,7 @@ export class UiService {
   }
   private getParties(){
     this.http
-      .get<Party[]>('http://localhost:3000/parties')
+      .get<Party[]>('http://localhost:8080/parties')
       .pipe(take(1))
       .subscribe({
         next: parties => {
@@ -154,10 +156,10 @@ export class UiService {
     })
   }
   private addParty(): number{
-    this.newPartyId = this.parties.length > 0 ? this.parties[this.parties.length-1].id : 0
+    this.newPartyId = this.parties.length > 0 ? this.parties[this.parties.length-1].id : -1
     this.newParty = { id: this.newPartyId + 1, name: this.newTransactionPartyName, budgetId: [this.newTransaction.budgetId ? this.newTransaction.budgetId : 0] }
     this.http
-      .post('http://localhost:3000/parties', this.newParty)
+      .post('http://localhost:8080/parties', this.newParty)
       .pipe(take(1))
       .subscribe({
         next: () => this.getParties(), 
@@ -190,13 +192,14 @@ export class UiService {
   addTransaction() {
     if(
       this.newTransactionPartyName === '' ||
-      this.newTransaction.accountId === 0 ||
+      //this.newTransaction.accountId === 0 ||
       this.newTransaction.amount === 0
     ){this.openSnackBar('Please enter all required feilds', 'Close')} else {
+
     this.checkForPartyId()
     if(this.income === false) { this.newTransaction.amount = this.newTransaction.amount * -1 }
     this.http
-      .post('http://localhost:3000/transactions', this.newTransaction)
+      .post('http://localhost:8080/transactions', this.newTransaction)
       .pipe(take(1))
       .subscribe(() => this.getTransactions(), () => this.openSnackBar('Something went wrong', 'Close'))
 
@@ -209,7 +212,7 @@ export class UiService {
     //apply this.newTransaction.amount to the account.balance
     this.updatedAccountBalance = this.currentAccountBalance + this.newTransaction.amount
     this.http
-      .patch('http://localhost:3000/accounts/' + this.newTransaction.accountId, {balance: this.updatedAccountBalance})
+      .patch("http://localhost:8080/accounts?id=" + this.newTransaction.accountId, {balance: this.updatedAccountBalance})
       .pipe(take(1))
       .subscribe(() => this.getAccounts(), () => this.openSnackBar('Something went wrong', 'Close'))
 
@@ -222,11 +225,11 @@ export class UiService {
     //apply this.newTransaction.amount to the budget.balance
     this.updatedBudgetBalance = Number(this.currentBudgetBalance) + Number(this.newTransaction.amount)
     this.http
-      .patch('http://localhost:3000/budgets/' + this.newTransaction.budgetId, {balance: this.updatedBudgetBalance})
+      .patch("http://localhost:8080/budgets?id=" + this.newTransaction.budgetId, {balance: this.updatedBudgetBalance})
       .pipe(take(1))
       .subscribe(() => this.getBudgets(), () => this.openSnackBar('Something went wrong', 'Close'))
     //reset feilds
-    this.newTransaction.id = this.newTransaction.id + 1
+    // this.newTransaction.id = this.newTransaction.id + 1
     this.newTransactionPartyName = ''
     this.newTransaction.partyId = 0
     this.newTransaction.amount = 0
@@ -290,13 +293,13 @@ export class UiService {
         //if there are suggestedbudgets, add them into the transaction
         if(this.suggestedBudgets.length > 0){
           this.http
-            .patch('http://localhost:3000/transactions/' + this.transactions[i].id, {budgetId: this.suggestedBudgets[0].id})
+            .patch('http://localhost:8080/transactions/' + this.transactions[i].id, {budgetId: this.suggestedBudgets[0].id})
             .pipe(take(1))
             .subscribe(() => this.getTransactions(), () => this.openSnackBar('Something went wrong', 'Close'))
         } else {
         //else add the miscellaneous budget to the transaction
         this.http
-            .patch('http://localhost:3000/transactions/' + this.transactions[i].id, {budgetId: -1})
+            .patch('http://localhost:8080/transactions/' + this.transactions[i].id, {budgetId: -1})
             .pipe(take(1))
             .subscribe(() => this.getTransactions(), () => this.openSnackBar('Something went wrong', 'Close'))
         }

@@ -1,10 +1,56 @@
 {
   "accounts": [
+    {
+      "id": 1,
+      "name": "checking",
+      "type": "checking",
+      "balance": 7857
+    }
   ],
   "budgets": [
+    {
+      "id": 1,
+      "name": "food",
+      "total": "80",
+      "balance": -63
+    },
+    {
+      "id": 2,
+      "name": "Rent",
+      "total": "1500",
+      "balance": 1500
+    }
   ],
   "parties": [
+    {
+      "id": 1,
+      "name": "Walmart",
+      "budgetId": [
+        1
+      ]
+    },
+    {
+      "id": 2,
+      "name": "Landlord",
+      "budgetId": [
+        1
+      ]
+    }
   ],
   "transactions": [
+    {
+      "partyId": 1,
+      "accountId": 1,
+      "amount": -55,
+      "budgetId": 1,
+      "id": 1
+    },
+    {
+      "partyId": 2,
+      "accountId": 1,
+      "amount": -88,
+      "budgetId": 1,
+      "id": 2
+    }
   ]
 }
