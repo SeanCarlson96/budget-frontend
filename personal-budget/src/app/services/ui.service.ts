@@ -122,21 +122,19 @@ export class UiService {
     for(let i = 0; i < transactions.length; i++){
       let tran: strTransaction = {} as strTransaction
       this.http
-        .get<Party>(`http://localhost:8080/parties?id=${transactions[i].partyId}`)
+        .get<Party>('http://localhost:8080/parties/' + transactions[i].partyId)
         .pipe(take(1))
-        .subscribe(party  => tran.partyName = party.name) 
-
+        .subscribe(party => party != null ? tran.partyName = party.name : tran.partyName = "Not Found")
       this.http
-        .get<Account>('http://localhost:8080/accounts?id=' + transactions[i].accountId)
+        .get<Account>('http://localhost:8080/accounts/' + transactions[i].accountId)
         .pipe(take(1))
         .subscribe(account => tran.accountName = account.name)
-
-      //if(transactions[i].budgetId && transactions[i].budgetId! > 0){
+      if(transactions[i].budgetId && transactions[i].budgetId! > 0){
       this.http
-        .get<Budget>('http://localhost:8080/budgets?id=' + transactions[i].budgetId)
+        .get<Budget>('http://localhost:8080/budgets/' + transactions[i].budgetId)
         .pipe(take(1))
         .subscribe(budget => tran.budgetName = budget.name)
-      //}
+      }
       tran.id = transactions[i].id
       tran.amount = transactions[i].amount
       this.translatedTransactions.push(tran)
@@ -212,7 +210,7 @@ export class UiService {
     //apply this.newTransaction.amount to the account.balance
     this.updatedAccountBalance = this.currentAccountBalance + this.newTransaction.amount
     this.http
-      .patch("http://localhost:8080/accounts?id=" + this.newTransaction.accountId, {balance: this.updatedAccountBalance})
+      .patch("http://localhost:8080/accounts/" + this.newTransaction.accountId, this.updatedAccountBalance)
       .pipe(take(1))
       .subscribe(() => this.getAccounts(), () => this.openSnackBar('Something went wrong', 'Close'))
 
@@ -225,7 +223,7 @@ export class UiService {
     //apply this.newTransaction.amount to the budget.balance
     this.updatedBudgetBalance = Number(this.currentBudgetBalance) + Number(this.newTransaction.amount)
     this.http
-      .patch("http://localhost:8080/budgets?id=" + this.newTransaction.budgetId, {balance: this.updatedBudgetBalance})
+      .patch("http://localhost:8080/budgets/" + this.newTransaction.budgetId, this.updatedBudgetBalance)
       .pipe(take(1))
       .subscribe(() => this.getBudgets(), () => this.openSnackBar('Something went wrong', 'Close'))
     //reset feilds
