@@ -124,7 +124,7 @@ export class UiService {
       this.http
         .get<Party>(`http://localhost:8080/parties?id=${transactions[i].partyId}`)
         .pipe(take(1))
-        .subscribe(party  => tran.partyName = party.name)
+        .subscribe(party  => tran.partyName = party.name) 
 
       this.http
         .get<Account>('http://localhost:8080/accounts?id=' + transactions[i].accountId)
