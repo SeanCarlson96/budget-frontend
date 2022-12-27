@@ -7,6 +7,7 @@ import { Budget } from 'src/data/budget';
 import { Transaction } from 'src/data/transaction';
 import { Party } from 'src/data/party';
 import { strTransaction } from 'src/data/strTransaction';
+import { PartyRequestBody } from 'src/data/partyRequestBody';
 
 @Injectable({
   providedIn: 'root'
@@ -40,6 +41,7 @@ export class UiService {
   //@Output() updatedTransactions: EventEmitter<strTransaction[]> = new EventEmitter()
   translatedTransactions: strTransaction[] = []
   private transSubject: Subject<strTransaction[]> = new Subject()
+  private partyRequestBody: PartyRequestBody = {} as PartyRequestBody
 
   constructor(http: HttpClient, private _snackBar: MatSnackBar) {
     this.target = localStorage.getItem("page")? localStorage.getItem("page") : 'dashboard';
@@ -155,13 +157,18 @@ export class UiService {
   }
   private addParty(): number{
     this.newPartyId = this.parties.length > 0 ? this.parties[this.parties.length-1].id : -1
-    this.newParty = { id: this.newPartyId + 1, name: this.newTransactionPartyName, budgetId: [this.newTransaction.budgetId ? this.newTransaction.budgetId : 0] }
+    this.newParty = { id: this.newPartyId + 1, name: this.newTransactionPartyName, budgetIdList: [] }
+    
+    this.partyRequestBody = {
+      party: this.newParty,
+      budgetId: this.newTransaction.budgetId ? this.newTransaction.budgetId : 0
+    }
     this.http
-      .post('http://localhost:8080/parties', this.newParty)
+      .post('http://localhost:8080/parties', this.partyRequestBody)
       .pipe(take(1))
       .subscribe({
         next: () => this.getParties(), 
-        error: () => this.openSnackBar('Something went wrong', 'Close'),
+        error: () => this.openSnackBar('Something went wrong when adding a new Party', 'Close'),
       })
     return this.newParty.id
   }
