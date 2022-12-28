@@ -221,6 +221,8 @@ export class UiService {
       .pipe(take(1))
       .subscribe(() => this.getAccounts(), () => this.openSnackBar('Something went wrong', 'Close'))
 
+    //if there was a budget added in the transaction
+    if(this.newTransaction.budgetId) {
     //find Budget based on this.newTransaction.budgetId
     for(let i = 0; i < this.budgets.length; i++){
       if(this.budgets[i].id === this.newTransaction.budgetId){
@@ -232,8 +234,9 @@ export class UiService {
     this.http
       .patch("http://localhost:8080/budgets/" + this.newTransaction.budgetId, this.updatedBudgetBalance)
       .pipe(take(1))
-      .subscribe(() => this.getBudgets(), () => this.openSnackBar('Something went wrong', 'Close'))
-    //reset feilds
+      .subscribe(() => this.getBudgets(), () => this.openSnackBar('Something went wrong updating budget balance', 'Close'))
+    }
+      //reset feilds
     // this.newTransaction.id = this.newTransaction.id + 1
     this.newTransactionPartyName = ''
     this.newTransaction.partyId = 0
